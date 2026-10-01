@@ -13,7 +13,7 @@ export async function loadProfil(authId: string): Promise<Profil | null> {
   if (u) {
     if (!u.actif) return null;
     // La policy ne renvoie le restaurant que s'il est actif.
-    const { data: r } = await supabase.from('restaurants').select('nom').maybeSingle();
+    const { data: r } = await supabase.from('restaurants').select('nom').eq('id', u.restaurant_id).maybeSingle();
     if (!r) return null;
     return { user: u as Utilisateur, restaurantNom: r.nom as string };
   }
